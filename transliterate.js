@@ -1,4 +1,8 @@
 
+ul = require('unicode-length');
+runes = require('runes');
+
+
 function transliterate(string,origLang,finalLang){
     greatArray = {
       "oM" :{
@@ -28,14 +32,14 @@ function transliterate(string,origLang,finalLang){
 		}
 		
 		outString = outString + detClass.outStr;
-		loopString = loopString.substr(0,detClass.i);
+		loopString = runes.substr(loopString,detClass.i);
 	
 	} while (1);
   }
 
 function removeLastChar(detClass){
-	len = detClass.outStr.length;
-	detClass.outStr = detClass.outStr.substr(0,len-1);
+	len = ul.get(detClass.outStr);
+	detClass.outStr = runes.substr(detClass.outStr,0,len-1);
 	return detClass;
 }
 
@@ -60,20 +64,20 @@ function next_conv_char(greatArray,inpString,detClass,resetAll){
 
     if (getI.i >0){
         detClass.outStr = getI.greatA.opDvn;
-	detClass.removeLastChar = getI.greatA.performMinusOne && previousMinussable;
-	previousMinussable = getI.greatA.isMinussable;
+	    detClass.removeLastChar = getI.greatA.performMinusOne && previousMinussable;
+	    previousMinussable = getI.greatA.isMinussable;
     } else {
-	detClass.outStr = inpString.substr(0,1);
-	getI.i = getI.i + 1;
+	    detClass.outStr = runes.substr(inpString,0,1);
+	    getI.i = getI.i + 1;
     }
     detClass.i = getI.i;
     return detClass;
 }
 
 function getMatchxingI(inpString,hasMinus,greatArray){
-    l = inpString.length;
+    l = ul.get(inpString);
     for(i= (detClass.brhMaxSize > l) ? l:detClass.brhMaxSize ; i > 0; i--){
-        subString = inpString.substr(0,i);
+        subString = runes.substr(inpString,0,i);
         if (hasMinus){
             subString = subString + "[%% e %%]";
         }
