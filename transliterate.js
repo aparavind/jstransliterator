@@ -1,5 +1,6 @@
+
 function transliterate(string,origLang,finalLang){
-    ebrh2dvng = {
+    greatArray = {
       "oM" :{
         "opDvn" : "ॐ",
         "isLast" : 1,
@@ -8,8 +9,35 @@ function transliterate(string,origLang,finalLang){
         "existAnother" : 0,
         "independantInvalid" : 0
       }
-    }
+    };
+	detClass = {};
+	detClass = next_conv_char(0,0,detClass,1);
+
+	offset = 0;
+	loopString = string;
+	outString = "";
+	do {
+		removeLastChar = 0;
+		detClass = next_conv_char(greatArray,loopString,detClass,0);
+		if (detClass.i == 0){
+			break;
+		}
+
+		if (detClass.removeLastChar == 1){
+			detClass = removeLastChar(detClass);
+		}
+		
+		outString = outString + detClass.outStr;
+		loopString = loopString.substr(0,detClass.i);
+	
+	} while (1);
   }
+
+function removeLastChar(detClass){
+	len = detClass.outStr.length;
+	detClass.outStr = detClass.outStr.substr(0,len-1);
+	return detClass;
+}
 
 function next_conv_char(greatArray,inpString,detClass,resetAll){
 
@@ -27,15 +55,22 @@ function next_conv_char(greatArray,inpString,detClass,resetAll){
     getI = getMatchingI(inpString,detClass.previousMinussable,greatArray);
 
     if ((getI.i == 0) && (detClass.previousMinussable == 1)){
-        i = getMatchingI(inpString,0,greatArray);
+        getI = getMatchingI(inpString,0,greatArray);
     }
 
-    if (i >0){
-        outStr = greatArray[]
+    if (getI.i >0){
+        detClass.outStr = getI.greatA.opDvn;
+	detClass.removeLastChar = getI.greatA.performMinusOne && previousMinussable;
+	previousMinussable = getI.greatA.isMinussable;
+    } else {
+	detClass.outStr = inpString.substr(0,1);
+	getI.i = getI.i + 1;
     }
+    detClass.i = getI.i;
+    return detClass;
 }
 
-function getMatchingI(inpString,hasMinus,greatArray){
+function getMatchxingI(inpString,hasMinus,greatArray){
     l = inpString.length;
     for(i= (detClass.brhMaxSize > l) ? l:detClass.brhMaxSize ; i > 0; i--){
         subString = inpString.substr(0,i);
